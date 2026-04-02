@@ -76,7 +76,7 @@ export function MessageFeed({
 
     // Handoff card
     if (message.message_type === "handoff" && message.metadata) {
-      const meta = message.metadata as {
+      const meta = message.metadata as unknown as {
         handoff_id?: string;
         outgoing_name?: string;
         incoming_name?: string;
@@ -108,7 +108,7 @@ export function MessageFeed({
 
     // Swap request card
     if (message.message_type === "swap_request" && message.metadata) {
-      const meta = message.metadata as {
+      const meta = message.metadata as unknown as {
         swap_id?: string;
         requested_by_name?: string;
         requested_by_emoji?: string;
@@ -148,7 +148,7 @@ export function MessageFeed({
 
     // Quick reply card
     if (message.message_type === "quick_reply" && message.metadata) {
-      const meta = message.metadata as QuickReplyMetadata & { question?: string };
+      const meta = message.metadata as unknown as QuickReplyMetadata & { question?: string };
       return (
         <div key={key} className="px-4 py-2">
           <QuickReplyCard

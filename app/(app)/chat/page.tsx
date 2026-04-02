@@ -308,16 +308,16 @@ export default function ChatPage() {
     const msg = useChatStore.getState().messages.find((m) => m.id === messageId);
     if (!msg?.metadata) return;
 
-    const meta = msg.metadata as { question?: string; options: QuickReplyOption[]; responses: { user_id: string; option_id: string; name: string }[] };
+    const meta = msg.metadata as unknown as { question?: string; options: QuickReplyOption[]; responses: { user_id: string; option_id: string; name: string }[] };
     const newResponse = { user_id: profile.id, option_id: optionId, name: profile.name ?? "" };
     const updatedMeta = {
       ...meta,
       responses: [...(meta.responses ?? []).filter((r) => r.user_id !== profile.id), newResponse],
     };
 
-    updateMessage(messageId, { metadata: updatedMeta });
+    updateMessage(messageId, { metadata: updatedMeta as unknown as Json });
 
-    await supabase.from("messages").update({ metadata: updatedMeta }).eq("id", messageId);
+    await supabase.from("messages").update({ metadata: updatedMeta as unknown as Json }).eq("id", messageId);
   };
 
   const handleSendThreadReply = async (parentId: string, content: string) => {
