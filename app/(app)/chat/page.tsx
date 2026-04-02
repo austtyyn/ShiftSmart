@@ -15,7 +15,7 @@ import { useMembers } from "@/hooks/useMembers";
 import { useChatStore } from "@/stores/chatStore";
 import { useAuthStore } from "@/stores/authStore";
 import { createClient } from "@/lib/supabase/client";
-import type { MessageUrgency, TaskWithProfiles, ShiftWithProfile, QuickReplyOption } from "@/lib/supabase/types";
+import type { MessageUrgency, TaskWithProfiles, ShiftWithProfile, QuickReplyOption, Json } from "@/lib/supabase/types";
 import { useScheduleStore } from "@/stores/scheduleStore";
 import { useShifts } from "@/hooks/useShifts";
 
@@ -262,7 +262,7 @@ export default function ChatPage() {
     options: QuickReplyOption[];
   }) => {
     if (!membership?.location_id || !profile) return;
-    const metadata = { question: data.question, options: data.options, responses: [] };
+    const metadata = { question: data.question, options: data.options, responses: [] } as unknown as Json;
     const tempId = `temp-${Date.now()}`;
     appendMessage({
       id: tempId,
